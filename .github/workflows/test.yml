@@ -175,7 +175,7 @@ jobs:
   release-metadata:
     name: Release Metadata
     needs: [changes, backend-tests, repo-checks, e2e-tests]
-    if: needs.changes.outputs.application == 'true'
+    if: github.repository == 'ZimengXiong/ExcaliDash' && needs.changes.outputs.application == 'true'
     runs-on: ubuntu-24.04
     outputs:
       stable: ${{ steps.metadata.outputs.stable }}
@@ -244,6 +244,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
   backend-image:
+    if: github.repository == 'ZimengXiong/ExcaliDash'
     name: Backend Image
     needs: release-metadata
     permissions:
@@ -275,6 +276,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
   frontend-image:
+    if: github.repository == 'ZimengXiong/ExcaliDash'
     name: Frontend Image
     needs: release-metadata
     permissions:
@@ -308,7 +310,7 @@ jobs:
   image-builds:
     name: Container Image Builds
     needs: [release-metadata, backend-image, frontend-image]
-    if: always() && needs.release-metadata.result == 'success' && needs.backend-image.result == 'success' && needs.frontend-image.result == 'success'
+    if: always() && github.repository == 'ZimengXiong/ExcaliDash' && needs.release-metadata.result == 'success' && needs.backend-image.result == 'success' && needs.frontend-image.result == 'success'
     runs-on: ubuntu-24.04
     outputs:
       publish: ${{ needs.release-metadata.outputs.publish }}
@@ -360,7 +362,7 @@ jobs:
   github-release:
     name: GitHub Release
     needs: image-builds
-    if: needs.image-builds.outputs.stable == 'true'
+    if: github.repository == 'ZimengXiong/ExcaliDash' && needs.image-builds.outputs.stable == 'true'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -394,7 +396,7 @@ jobs:
   github-dev-release:
     name: GitHub Dev Release
     needs: image-builds
-    if: needs.image-builds.outputs.publish == 'true' && needs.image-builds.outputs.stable != 'true'
+    if: github.repository == 'ZimengXiong/ExcaliDash' && needs.image-builds.outputs.publish == 'true' && needs.image-builds.outputs.stable != 'true'
     runs-on: ubuntu-24.04
     permissions:
       contents: write
@@ -420,7 +422,7 @@ jobs:
   sync-dev:
     name: Sync Main Back To Dev
     needs: [image-builds, github-release]
-    if: needs.image-builds.outputs.stable == 'true'
+    if: github.repository == 'ZimengXiong/ExcaliDash' && needs.image-builds.outputs.stable == 'true'
     runs-on: ubuntu-24.04
     permissions:
       contents: write

@@ -1,0 +1,6 @@
+# Inherited deterministic Playwright JWT fixture, not a deployed credential.
+e2dddef94e78f34376bafe1e10b5cc2f8b3b9093:e2e/playwright.config.ts:generic-api-key:96
+# Earlier revision of the same synthetic Playwright JWT fixture.
+fd483d8c35ad2a582069997f172349e59ee4af0f:e2e/playwright.config.ts:generic-api-key:90
+# Inherited local PostgreSQL test JWT fixture, not a deployed credential.
+df9906226e287fd21e3ef3212c7a125aa239de61:docker-compose.pg-test.yml:generic-api-key:29

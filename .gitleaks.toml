@@ -1,0 +1,13 @@
+title = "ExcaliDash inherited synthetic fixture controls"
+
+[extend]
+useDefault = true
+
+# Exact public test values only; arbitrary secrets in these files remain scanned.
+[[allowlists]]
+description = "Deterministic upstream local JWT fixtures, never deployed credentials"
+regexTarget = "secret"
+regexes = [
+  '''^e2e-jwt-secret-that-is-long-enough-for-tests$''', # e2e/playwright.config.ts
+  '''^test-secret-pg-min-32-chars-long$''', # docker-compose.pg-test.yml
+]
