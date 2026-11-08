@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { logAuditEvent } from "../utils/audit";
 import { apiKeyCreateSchema } from "./schemas";
 import {
+  ALLOWED_API_KEY_SCOPES,
   DEFAULT_API_KEY_SCOPES,
   generateApiKey,
   parseApiKeyScopes,
@@ -33,7 +34,7 @@ const normalizeApiKeyScopes = (
   scopes: string[] | undefined,
 ): string[] | null => {
   if (!scopes) return [...DEFAULT_API_KEY_SCOPES];
-  const allowedScopes = new Set<string>(DEFAULT_API_KEY_SCOPES);
+  const allowedScopes = new Set<string>(ALLOWED_API_KEY_SCOPES);
   const normalized = Array.from(
     new Set(scopes.map((scope) => scope.trim()).filter(Boolean)),
   );

@@ -111,10 +111,13 @@ const isAllowedWhileMustResetPassword = (req: Request): boolean => {
 };
 const getApiKeyRouteResource = (
   req: Request,
-): "drawings" | "collections" | null => {
+): "drawings" | "collections" | "library" | null => {
   const path = normalizeRequestPath(req);
   const segments = path.split("/").filter(Boolean);
   const method = req.method;
+  if (path === "/library" && ["GET", "HEAD"].includes(method)) {
+    return "library";
+  }
   if (segments[0] === "drawings") {
     if (segments.length === 1 && ["GET", "HEAD", "POST"].includes(method)) {
       return "drawings";

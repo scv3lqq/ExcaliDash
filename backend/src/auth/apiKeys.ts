@@ -15,6 +15,10 @@ export const DEFAULT_API_KEY_SCOPES = [
   "collections:read",
   "collections:write",
 ] as const;
+export const ALLOWED_API_KEY_SCOPES = [
+  ...DEFAULT_API_KEY_SCOPES,
+  "library:read",
+] as const;
 
 export const generateApiKey = (): {
   token: string;
